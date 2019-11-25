@@ -1,3 +1,5 @@
+For now, it just show last solve time, and helps with scrambling. More to come!
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
