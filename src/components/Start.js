@@ -20,12 +20,16 @@ class Start extends Component {
                     `linear-gradient(90deg, white 0%, white ${i}%, transparent ${i}%, transparent 100%)`
                 if (i >= 100) {
                     clearInterval(this.timer)
-                    this.props.started()
+                    this.timerReady = true
                 }
             }, 10);
 
         } else if (!intervalStarted) {
             clearInterval(this.timer)
+            if (this.timerReady) {
+                this.timerReady = false
+                this.props.started()
+            }
             document.querySelector('.start__button').style.backgroundImage =
                 `linear-gradient(90deg, white 0%, white 0%, transparent 0%, transparent 100%)`
         }
