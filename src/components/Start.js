@@ -11,7 +11,6 @@ class Start extends Component {
     }
 
     handleStart = (intervalStarted) => {
-        console.log(this);
         let i = 0
         if (intervalStarted) {
             this.timer = setInterval(() => {
@@ -21,6 +20,8 @@ class Start extends Component {
                 if (i >= 100) {
                     clearInterval(this.timer)
                     this.timerReady = true
+                    document.querySelector('.start__button').style.background =
+                        `rgb(103, 255, 92)`
                 }
             }, 10);
 

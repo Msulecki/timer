@@ -63,6 +63,8 @@ class App extends Component {
           if (i >= 100) {
             clearInterval(this.timer)
             this.timerReady = true
+            document.querySelector('.start__button').style.background =
+              `rgb(103, 255, 92)`
           }
         }, 10);
       }

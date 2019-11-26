@@ -1,13 +1,12 @@
 .results {
     height: auto;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
     font-size: 1rem;
-    &__item {
-        color: white;
-    }
-    &__scramble{
-        display: none;
-    }
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+    gap: 5px;
+    margin-top: 15px;
+    color: white;
+
 }

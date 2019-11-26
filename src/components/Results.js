@@ -4,23 +4,97 @@ import '../style/Results.scss'
 class Results extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            best: 0,
+            avg: 0,
+            ao5: 0,
+            ao12: 0
+        }
+    }
+    componentDidMount() {
+        // console.log(Math.floor(this.result_time / 6000), (this.result_time / 100) % 60);
+
     }
     componentDidUpdate() {
-
+        if (this.props.results.length > 0) {
+            const time = []
+            for (let i = 0; i < this.props.results.length; i++) {
+                time.unshift(this.props.results[i][1])
+            }
+            let best = [...time]
+            best = best.sort((a, b) => (a - b))[0]
+            const avg = Math.floor(time.reduce((p, c) => (p + c), 0) / time.length)
+            if (avg !== this.state.avg) {
+                this.setState({
+                    best,
+                    avg
+                })
+            }
+            if (time.length >= 5) {
+                let last5 = []
+                for (let i = 0; i < 5; i++) {
+                    last5.push(time[i])
+                }
+                last5 = last5.sort((a, b) => (a - b))
+                last5.pop()
+                last5.shift()
+                const ao5 = Math.floor(last5.reduce((p, c) => (p + c), 0) / last5.length)
+                if (ao5 !== this.state.ao5) {
+                    this.setState({
+                        ao5
+                    })
+                }
+                if (time.length >= 12) {
+                    let last12 = []
+                    for (let i = 0; i < 12; i++) {
+                        last12.push(time[i])
+                    }
+                    last12 = last12.sort((a, b) => (a - b))
+                    last12.pop()
+                    last12.shift()
+                    const ao12 = Math.floor(last12.reduce((p, c) => (p + c), 0) / last12.length)
+                    if (ao12 !== this.state.ao12) {
+                        this.setState({
+                            ao12
+                        })
+                    }
+                }
+            }
+        }
+        this.handleTimes()
+    }
+    handleTimes = () => {
+        let time = {
+            best: `${Math.floor(this.state.best / 6000) > 9 ?
+                Math.floor(this.state.best / 6000)
+                : `0` + Math.floor(this.state.best / 6000)}:${Math.floor((this.state.best / 100) % 60) > 9 ?
+                    (this.state.best / 100) % 60
+                    : `0` + ((this.state.best / 100) % 60).toFixed(2)}`,
+            avg: `${Math.floor(this.state.avg / 6000) > 9 ?
+                Math.floor(this.state.avg / 6000)
+                : `0` + Math.floor(this.state.avg / 6000)}:${Math.floor((this.state.avg / 100) % 60) > 9 ?
+                    (this.state.avg / 100) % 60
+                    : `0` + ((this.state.avg / 100) % 60).toFixed(2)}`,
+            ao5: `${Math.floor(this.state.ao5 / 6000) > 9 ?
+                Math.floor(this.state.ao5 / 6000)
+                : `0` + Math.floor(this.state.ao5 / 6000)}:${Math.floor((this.state.ao5 / 100) % 60) > 9 ?
+                    (this.state.ao5 / 100) % 60
+                    : `0` + ((this.state.ao5 / 100) % 60).toFixed(2)}`,
+            ao12: `${Math.floor(this.state.ao12 / 6000) > 9 ?
+                Math.floor(this.state.ao12 / 6000)
+                : `0` + Math.floor(this.state.ao12 / 6000)}:${Math.floor((this.state.ao12 / 100) % 60) > 9 ?
+                    (this.state.ao12 / 100) % 60
+                    : `0` + ((this.state.ao12 / 100) % 60).toFixed(2)}`,
+        }
+        return time
     }
     render() {
         return (<div className='results'>
-            {/* <ol>
-                {this.props.results.map((el, i) => {
-                    if (i > this.props.results.length - 5) {
-                        return (<li className='results__item' key={i}>
-                            <div className='results__time'>{el[0]}</div><div className='results__scramble'>{el[1]}</div>
-                        </li>
-                        )
-                    }
-                })}
-            </ol> */}
+            {/* Math.floor(this.result_time / 6000), (this.result_time / 100) % 60) */}
+            <div>{`Best: ${this.handleTimes().best}`}</div>
+            <div>{`Avg: ${this.handleTimes().avg}`}</div>
+            <div>{`Ao5: ${this.handleTimes().ao5}`}</div>
+            <div>{`Ao12: ${this.handleTimes().ao12}`}</div>
         </div>);
     }
 }
