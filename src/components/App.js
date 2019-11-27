@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import Time from './Time'
 import Scramble from './Scramble'
 import Results from './Results'
+import ResultsList from './ResultsList'
 import Start from './Start'
 import Cube from './Cube'
+
 
 import '../style/App.scss';
 
@@ -22,7 +24,9 @@ class App extends Component {
       u: [],
       d: []
     },
-    rotation: true
+    rotation: true,
+    touchPosition: 0,
+    touchPositionSet: false
   }
 
   handleTimer = (resultDate) => {
@@ -44,10 +48,10 @@ class App extends Component {
 
   handleResults = (results) => { // for passing last result to results array
     this.setState({
-      results
+      results: results.reverse() // reverse for results newest to oldest
     })
   }
-  handleKey = isPressed => {
+  handleKey = (isPressed) => {
 
     if (isPressed && !this.keydown) {
       this.keydown = true
@@ -86,6 +90,7 @@ class App extends Component {
   componentDidMount() {
     //this.handleCube(['L', 'F', 'R', 'D', 'B', "U"])
     this.keydown = false
+    this.touched = false
     window.onkeydown = this.handleKey.bind(this, true)
     window.onkeyup = this.handleKey.bind(this, false)
 
@@ -301,6 +306,38 @@ class App extends Component {
       cube
     })
   }
+  handleTouch = (touch, e) => {
+    const slide = document.querySelector('.app__page')
+    const slidesNo = slide.childNodes.length
+    const matrix = window.getComputedStyle(slide, null).getPropertyValue('transform').match(/\d+/g)
+
+    if (touch && !this.state.touchPositionSet) {
+      this.setState({
+        touchPosition: e.touches[0].pageX,
+        slidePosition: matrix ? parseInt(matrix[4]) : 0,
+        touchPositionSet: true
+      })
+      slide.style.transition = '.0s'
+    }
+    if (!touch) {
+      this.setState({
+        touchPositionSet: false
+      })
+      slide.style.transition = '.5s'
+      let slideTouchEndPosition = Math.round(this.transform / (slide.offsetWidth)) * slide.offsetWidth
+      if (slideTouchEndPosition < 0) { slideTouchEndPosition = 0 }
+      slide.style.transform = `matrix(1,0,0,1,${-(slideTouchEndPosition)},0)`
+    }
+    if (touch === 'move') {
+
+      this.transform = this.state.slidePosition + (this.state.touchPosition - e.touches[0].pageX)
+      if (this.transform > slide.offsetWidth * (slidesNo - 1)) { this.transform = slide.offsetWidth * (slidesNo - 1) }
+      if ((this.transform > 0) && (this.transform < slide.offsetWidth * (slidesNo - 1))) {
+        slide.style.transform = `matrix(1,0,0,1,${-this.transform},0)`
+      }
+    }
+  }
+
   render() {
     return (
       <div className="app"
@@ -314,9 +351,21 @@ class App extends Component {
           resultsArr={this.handleResults}
           resultDate={this.state.resultDate}
         />
+
         {!this.state.started && <Scramble showScramble={this.handleCube} passScramble={this.handleScramble} />}
-        {!this.state.started && <Cube cubeGrid={this.state.cube} />}
-        {!this.state.started && <Results results={this.state.results} />}
+        {!this.state.started && <div className="app__page"
+          onTouchMove={this.handleTouch.bind(this, 'move')}
+          onTouchStart={this.handleTouch.bind(this, true)}
+          onTouchEnd={this.handleTouch.bind(this, false)}
+        >
+          <div className="app__page-1">
+            <Cube cubeGrid={this.state.cube} />
+            <Results results={this.state.results} />
+          </div>
+          <div className="app__page-2"><ResultsList results={this.state.results} /></div>
+          <div className="app__page-3">3</div>
+          <div className="app__page-4">4</div>
+        </div>}
         {!this.state.started && <Start started={this.handleTimer} />}
 
       </div >
