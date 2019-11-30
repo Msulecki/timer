@@ -32,13 +32,17 @@ class Swipeme extends Component {
     })
     const slide = document.querySelector('.swipeme__slide')
     const relativePosition = this.margin + (this.slidePosition * slide.offsetWidth)
-
+    let pageX
+    if (typeof e !== 'undefined') {
+      if (typeof e.pageX === 'undefined' && typeof e.touches[0] !== 'undefined') pageX = e.touches[0].pageX
+      if (typeof e.pageX !== 'undefined') pageX = e.pageX
+    }
     if (event === 'down') { // clicked / touched
       this.down = true
       this.up = false
-      this.dragStartPosition = e.pageX
+      this.dragStartPosition = pageX
       slide.style.transition = '0s'
-
+      //console.log(e.touches[0].pageX);
 
     }
     if (event === 'up') { // reset events then mouseup / touchend
@@ -48,7 +52,7 @@ class Swipeme extends Component {
 
 
 
-      if (Math.abs(relativePosition) > 50 && (this.dragStartPosition - e.pageX) !== 0) {
+      if (Math.abs(relativePosition) > 50 && (this.dragStartPosition - pageX) !== 0) {
         if (relativePosition < 0 && this.slidePosition < this.slideNumber - 1) {
           this.slidePosition++
         }
@@ -66,9 +70,9 @@ class Swipeme extends Component {
     if (event === 'move' && this.down === true) { // detect drag
 
       this.drag = true
-      this.margin = (e.pageX - this.dragStartPosition) - (this.slidePosition * slide.offsetWidth)
+      this.margin = (pageX - this.dragStartPosition) - (this.slidePosition * slide.offsetWidth)
 
-      console.log(this.slidePosition, relativePosition, this.margin, this.offsetMargin);
+      // console.log(this.slidePosition, relativePosition, this.margin, this.offsetMargin);
       slide.style.marginLeft = `${this.margin}px`
       // console.log(-(this.margin % slide.offsetWidth), (slide.offsetWidth / 4));
 
@@ -84,7 +88,10 @@ class Swipeme extends Component {
             <div className="swipeme__slide"
               onMouseDown={this.handleMouse.bind(this, 'down')}
               onMouseUp={this.handleMouse.bind(this, 'up')}
-              onMouseMove={this.handleMouse.bind(this, 'move')}>
+              onMouseMove={this.handleMouse.bind(this, 'move')}
+              onTouchStart={this.handleMouse.bind(this, 'down')}
+              onTouchEnd={this.handleMouse.bind(this, 'up')}
+              onTouchMove={this.handleMouse.bind(this, 'move')}>
               <Cube cubeGrid={this.props.cubeGrid} />
               <Results results={this.props.results} />
             </div>
@@ -92,7 +99,10 @@ class Swipeme extends Component {
             <div className="swipeme__slide"
               onMouseDown={this.handleMouse.bind(this, 'down')}
               onMouseUp={this.handleMouse.bind(this, 'up')}
-              onMouseMove={this.handleMouse.bind(this, 'move')}>
+              onMouseMove={this.handleMouse.bind(this, 'move')}
+              onTouchStart={this.handleMouse.bind(this, 'down')}
+              onTouchEnd={this.handleMouse.bind(this, 'up')}
+              onTouchMove={this.handleMouse.bind(this, 'move')}>
               <ResultsList results={this.props.results} />
             </div>
 
