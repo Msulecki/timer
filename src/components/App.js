@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import Time from './Time'
 import Scramble from './Scramble'
-import Results from './Results'
-import ResultsList from './ResultsList'
 import Start from './Start'
-import Cube from './Cube'
-import Swiper from 'swiper'
+import Swipeme from './Swipeme'
 
 
 import '../style/App.scss';
@@ -98,10 +95,6 @@ class App extends Component {
   }
 
   componentDidUpdate() {
-    new Swiper('.swiper-container', {
-      speed: 500,
-      loop: false
-    });
   }
 
   handleCube = (scramble) => {
@@ -329,17 +322,8 @@ class App extends Component {
         />
 
         {!this.state.started && <Scramble showScramble={this.handleCube} passScramble={this.handleScramble} />}
-        {!this.state.started && <div className="swiper-container"
-        ><div className="app__page swiper-wrapper">
-            <div className="app__page-1 swiper-slide">
-              <Cube cubeGrid={this.state.cube} />
-              <Results results={this.state.results} />
-            </div>
-            <div className="app__page-2 swiper-slide"><ResultsList results={this.state.results} /></div>
-            <div className="app__page-3 swiper-slide"></div>
-            <div className="app__page-4 swiper-slide"></div>
-          </div>
-        </div>}
+
+        {!this.state.started && <Swipeme cubeGrid={this.state.cube} results={this.state.results} />}
         {!this.state.started && <Start started={this.handleTimer} />}
 
       </div >
