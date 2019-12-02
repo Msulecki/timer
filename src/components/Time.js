@@ -44,7 +44,7 @@ class Time extends Component {
             if ((this.state.lastScramble !== this.props.scramble)) {
                 if ((this.state.lastScramble.length > 0) && document.querySelector('.time__clock').textContent !== '00:00.00' && this.state.resultDate !== this.props.resultDate) {
                     this.setState({
-                        results: [...this.state.results, [document.querySelector('.time__clock').textContent, this.result_time, this.state.lastScramble, this.props.resultDate]],
+                        results: [[this.props.resultDate, this.result_time, this.state.lastScramble, document.querySelector('.time__clock').textContent], ...this.state.results],
                         resultsUpdated: true,
                         resultDate: this.props.resultDate
                     })

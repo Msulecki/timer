@@ -26,7 +26,8 @@ class App extends Component {
     touchPosition: 0,
     touchPositionSet: false,
     swipeTime: [0, 0],
-    swipeSpeed: 0
+    swipeSpeed: 0,
+    activeSlidePosition: 0
   }
 
   handleTimer = (resultDate) => {
@@ -48,9 +49,19 @@ class App extends Component {
 
   handleResults = (results) => { // for passing last result to results array
     this.setState({
-      results: results.reverse() // reverse for results newest to oldest
+      results: results
+      //.reverse() // reverse for results newest to oldest
     })
   }
+
+  handleResultDelete = (item) => {
+    let results = this.state.results
+    results.splice(item, 1)
+    this.setState({
+      results
+    })
+  }
+
   handleKey = (isPressed) => {
 
     if (isPressed && !this.keydown) {
@@ -86,15 +97,6 @@ class App extends Component {
       }
     }
 
-  }
-  componentDidMount() {
-    //this.handleCube(['L', 'F', 'R', 'D', 'B', "U"])
-    window.onkeydown = this.handleKey.bind(this, true)
-    window.onkeyup = this.handleKey.bind(this, false)
-
-  }
-
-  componentDidUpdate() {
   }
 
   handleCube = (scramble) => {
@@ -306,6 +308,21 @@ class App extends Component {
     })
   }
 
+  handleActiveSlide = (activeSlidePosition) => {
+    this.setState({
+      activeSlidePosition
+    })
+  }
+  componentDidMount() {
+    window.onkeydown = this.handleKey.bind(this, true)
+    window.onkeyup = this.handleKey.bind(this, false)
+  }
+
+  componentDidUpdate() {
+  }
+
+
+
 
   render() {
     return (
@@ -323,7 +340,14 @@ class App extends Component {
 
         {!this.state.started && <Scramble showScramble={this.handleCube} passScramble={this.handleScramble} />}
 
-        {!this.state.started && <Swipeme cubeGrid={this.state.cube} results={this.state.results} />}
+        {!this.state.started &&
+          <Swipeme
+            cubeGrid={this.state.cube}
+            results={this.state.results}
+            activeSlidePosition={this.handleActiveSlide}
+            slide={this.state.activeSlidePosition}
+            deleteResult={this.handleResultDelete}
+            resultsUpdated={this.state.resultsUpdated} />}
         {!this.state.started && <Start started={this.handleTimer} />}
 
       </div >
