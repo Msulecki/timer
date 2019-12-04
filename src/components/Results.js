@@ -31,8 +31,8 @@ class Results extends Component {
                 time.push(this.props.results[i][1])
             }
             let best = [...time]
-            best = best.sort((a, b) => (a - b))[0].toFixed(2)
-            const avg = Math.floor(time.reduce((p, c) => (p + c), 0) / time.length).toFixed(2)
+            best = best.sort((a, b) => (a - b))[0]
+            const avg = Math.floor(time.reduce((p, c) => (p + c), 0) / time.length)
             if (avg !== this.state.avg) {
                 this.setState({
                     best,
@@ -47,7 +47,7 @@ class Results extends Component {
                 last5 = last5.sort((a, b) => (a - b))
                 last5.pop()
                 last5.shift()
-                const ao5 = Math.floor(last5.reduce((p, c) => (p + c), 0) / last5.length).toFixed(2)
+                const ao5 = Math.floor(last5.reduce((p, c) => (p + c), 0) / last5.length)
                 if (ao5 !== this.state.ao5) {
                     this.setState({
                         ao5
@@ -61,7 +61,7 @@ class Results extends Component {
                     last12 = last12.sort((a, b) => (a - b))
                     last12.pop()
                     last12.shift()
-                    const ao12 = Math.floor(last12.reduce((p, c) => (p + c), 0) / last12.length).toFixed(2)
+                    const ao12 = Math.floor(last12.reduce((p, c) => (p + c), 0) / last12.length)
                     if (ao12 !== this.state.ao12) {
                         this.setState({
                             ao12
@@ -95,22 +95,22 @@ class Results extends Component {
             best: `${Math.floor(this.state.best / 6000) > 9 ?
                 Math.floor(this.state.best / 6000)
                 : `0` + Math.floor(this.state.best / 6000)}:${Math.floor((this.state.best / 100) % 60) > 9 ?
-                    (this.state.best / 100) % 60
+                    ((this.state.best / 100) % 60).toFixed(2)
                     : `0` + ((this.state.best / 100) % 60).toFixed(2)}`,
             avg: `${Math.floor(this.state.avg / 6000) > 9 ?
                 Math.floor(this.state.avg / 6000)
                 : `0` + Math.floor(this.state.avg / 6000)}:${Math.floor((this.state.avg / 100) % 60) > 9 ?
-                    (this.state.avg / 100) % 60
+                    ((this.state.avg / 100) % 60).toFixed(2)
                     : `0` + ((this.state.avg / 100) % 60).toFixed(2)}`,
             ao5: `${Math.floor(this.state.ao5 / 6000) > 9 ?
-                Math.floor(this.state.ao5 / 6000)
+                Math.floor(this.state.ao5 / 6000).toFixed(2)
                 : `0` + Math.floor(this.state.ao5 / 6000)}:${Math.floor((this.state.ao5 / 100) % 60) > 9 ?
-                    (this.state.ao5 / 100) % 60
+                    ((this.state.ao5 / 100) % 60).toFixed(2)
                     : `0` + ((this.state.ao5 / 100) % 60).toFixed(2)}`,
             ao12: `${Math.floor(this.state.ao12 / 6000) > 9 ?
-                Math.floor(this.state.ao12 / 6000)
+                Math.floor(this.state.ao12 / 6000).toFixed(2)
                 : `0` + Math.floor(this.state.ao12 / 6000)}:${Math.floor((this.state.ao12 / 100) % 60) > 9 ?
-                    (this.state.ao12 / 100) % 60
+                    ((this.state.ao12 / 100) % 60).toFixed(2)
                     : `0` + ((this.state.ao12 / 100) % 60).toFixed(2)}`,
         }
         return time
