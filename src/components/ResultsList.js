@@ -9,7 +9,7 @@ function ResultsList(props) {
             <li key={item[0]}>{item[3]} {new Date(item[0]).toLocaleString()}
                 <button
                     onClick={props.deleteResult.bind(this, index)}
-                >delete</button>
+                >x</button>
             </li>
 
         )
@@ -18,9 +18,12 @@ function ResultsList(props) {
 
     )
     return (
-        <ol>
-            {items}
-        </ol>
+        <>
+            <div className="results__header">Results</div>
+            <ol>
+                {items.length === 0 ? <div>¯\_(ツ)_/¯¯</div> : items}
+            </ol>
+        </>
     );
 }
 
