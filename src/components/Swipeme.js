@@ -19,19 +19,25 @@ class Swipeme extends Component {
     this.transitionTime = '.5s'
     this.slideChanged = false
     this.slideNumber = 0
-    this.handleMouse()
 
-    const slide = document.querySelector('.swipeme__slide')
-    this.margin = -(this.slidePosition * slide.offsetWidth)
-    slide.style.marginLeft = `${this.margin}px`
+
+    this.slide = document.querySelector('.swipeme__slide')
+    this.margin = -(this.slidePosition * this.slide.offsetWidth)
+    this.slide.style.marginLeft = `${this.margin}px`
+
+    const container = document.querySelector('.swipeme__content') //container for slides
+    this.slideNumber = container.childNodes.length // container childrens = number of slides
+    this.setState({
+      slidesNumber: this.slideNumber
+    })
+
+    //this.handleMouse()
   }
   componentDidUpdate() {
   }
   handleMouse = (event, e) => {
-    const container = document.querySelector('.swipeme__content') //container for slides
-    this.slideNumber = container.childNodes.length // container childrens = number of slides
-    const slide = document.querySelector('.swipeme__slide')
-    const relativePosition = this.margin + (this.slidePosition * slide.offsetWidth)
+
+    const relativePosition = this.margin + (this.slidePosition * this.slide.offsetWidth)
     let pageX
     if (typeof e !== 'undefined') { //handle both click and touch events
       if (typeof e.pageX === 'undefined' && typeof e.touches[0] !== 'undefined') pageX = e.touches[0].pageX
@@ -41,7 +47,7 @@ class Swipeme extends Component {
       this.down = true
       this.up = false
       this.dragStartPosition = pageX
-      slide.style.transition = '0s'
+      this.slide.style.transition = '0s'
       //console.log(e.touches[0].pageX);
 
     }
@@ -64,17 +70,17 @@ class Swipeme extends Component {
         })
         this.props.activeSlidePosition(this.slidePosition)
       }
-      slide.style.marginLeft = `${-(this.slidePosition * slide.offsetWidth)}px`
-      slide.style.transition = this.transitionTime
+      this.slide.style.marginLeft = `${-(this.slidePosition * this.slide.offsetWidth)}px`
+      this.slide.style.transition = this.transitionTime
 
     }
     if (event === 'move' && this.down === true) { // detect drag
 
       this.drag = true
-      this.margin = (pageX - this.dragStartPosition) - (this.slidePosition * slide.offsetWidth)
+      this.margin = (pageX - this.dragStartPosition) - (this.slidePosition * this.slide.offsetWidth)
 
       // console.log(this.slidePosition, relativePosition, this.margin, this.offsetMargin);
-      slide.style.marginLeft = `${this.margin}px`
+      this.slide.style.marginLeft = `${this.margin}px`
       // console.log(-(this.margin % slide.offsetWidth), (slide.offsetWidth / 4));
 
     }
