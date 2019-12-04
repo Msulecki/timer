@@ -118,7 +118,7 @@ class Results extends Component {
     render() {
         return (<div className='results'>
             {/* Math.floor(this.result_time / 6000), (this.result_time / 100) % 60) */}
-            <div>{`Best: ${this.handleTimes().best}`}</div>
+            <div>Best: <span className='results__best'>{this.handleTimes().best}</span></div>
             <div>{`Avg: ${this.handleTimes().avg}`}</div>
             <div>{`Ao5: ${this.handleTimes().ao5}`}</div>
             <div>{`Ao12: ${this.handleTimes().ao12}`}</div>
