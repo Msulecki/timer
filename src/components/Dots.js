@@ -6,7 +6,6 @@ const Dots = (props) => {
 
         dots.push(<div key={i} className={props.active === i ? 'active' : null}></div>)
     }
-    console.log(props);
     return (
         <div className='swipeme__dots'>{dots}</div>
 
