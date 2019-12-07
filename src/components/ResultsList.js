@@ -19,7 +19,7 @@ function ResultsList(props) {
     )
     return (
         <>
-            <div className="results__header">All results</div>
+            <div className="results__header">All results ({items.length})</div>
             <ol>
                 {items.length === 0 ? <div>¯\_(ツ)_/¯¯</div> : items}
             </ol>

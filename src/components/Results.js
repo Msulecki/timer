@@ -29,15 +29,25 @@ class Results extends Component {
             for (let i = 0; i < this.props.results.length; i++) {
                 time.push(this.props.results[i][1])
             }
+
+            let median = time.sort((a, b) => (a - b))
+            if (median.length % 2 === 1) {
+                if (median.length > 1) {
+                    median = median[Math.floor(median.length / 2)]
+                }
+            } else {
+                median = (median[(median.length / 2) - 1] + median[(median.length / 2)]) / 2
+            }
             let best = [...time]
             best = best.sort((a, b) => (a - b))[0]
             const avg = Math.floor(time.reduce((p, c) => (p + c), 0) / time.length)
+            const sDev = Math.sqrt(time.reduce((acc, val) => acc.concat((val - avg) ** 2), []).reduce((acc, val) => acc + val, 0) / time.length)
             if (avg !== this.state.avg) {
                 this.setState({
                     best,
                     avg
                 })
-                this.props.scores([best, avg, 0, 0])
+                this.props.scores([best, avg, 0, 0, 0, 0, median, sDev])
             }
             if (time.length >= 5) {
                 let last5 = []
@@ -45,14 +55,16 @@ class Results extends Component {
                     last5.push(time[i])
                 }
                 last5 = last5.sort((a, b) => (a - b))
-                last5.pop()
-                last5.shift()
+                let mo3 = [...last5]
+                mo3.pop()
+                mo3.shift()
                 const ao5 = Math.floor(last5.reduce((p, c) => (p + c), 0) / last5.length)
+                mo3 = Math.floor(mo3.reduce((p, c) => (p + c), 0) / mo3.length)
                 if (ao5 !== this.state.ao5) {
                     this.setState({
                         ao5
                     })
-                    this.props.scores([best, avg, 0, 0])
+                    this.props.scores([best, avg, ao5, 0, mo3, 0, median, sDev])
                 }
                 if (time.length >= 12) {
                     let last12 = []
@@ -60,26 +72,28 @@ class Results extends Component {
                         last12.push(time[i])
                     }
                     last12 = last12.sort((a, b) => (a - b))
-                    last12.pop()
-                    last12.shift()
+                    let mo10 = [...last12]
+                    mo10.pop()
+                    mo10.shift()
                     const ao12 = Math.floor(last12.reduce((p, c) => (p + c), 0) / last12.length)
+                    mo10 = Math.floor(mo10.reduce((p, c) => (p + c), 0) / mo10.length)
                     if (ao12 !== this.state.ao12) {
                         this.setState({
                             ao12
                         })
-                        this.props.scores([best, avg, ao5, ao12])
+                        this.props.scores([best, avg, ao5, ao12, mo3, mo10, median, sDev])
                     }
                 } else {
                     this.setState({
                         ao12: 0
                     })
-                    this.props.scores([best, avg, ao5, 0])
+                    this.props.scores([best, avg, ao5, 0, mo3, 0, median, sDev])
                 }
             } else {
                 this.setState({
                     ao5: 0
                 })
-                this.props.scores([best, avg, 0, 0])
+                this.props.scores([best, avg, 0, 0, 0, 0, median, sDev])
             }
 
         }
@@ -91,7 +105,7 @@ class Results extends Component {
                 ao12: 0,
                 nulled: true
             })
-            this.props.scores([0, 0, 0, 0])
+            this.props.scores([0, 0, 0, 0, 0, 0, 0, 0])
         }
 
     }
@@ -117,7 +131,7 @@ class Results extends Component {
                 Math.floor(this.state.ao12 / 6000).toFixed(2)
                 : `0` + Math.floor(this.state.ao12 / 6000)}:${Math.floor((this.state.ao12 / 100) % 60) > 9 ?
                     ((this.state.ao12 / 100) % 60).toFixed(2)
-                    : `0` + ((this.state.ao12 / 100) % 60).toFixed(2)}`,
+                    : `0` + ((this.state.ao12 / 100) % 60).toFixed(2)}`
         }
         return time
     }

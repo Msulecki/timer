@@ -16,8 +16,8 @@ class Start extends Component {
             this.timer = setInterval(() => {
                 i++
                 document.querySelector('.start__button').style.backgroundImage =
-                    `linear-gradient(90deg, white 0%, white ${i}%, transparent ${i}%, transparent 100%)`
-                if (i >= 100) {
+                    `linear-gradient(90deg, white 0%, white ${(i / 60) * 100}%, transparent ${(i / 60) * 100}%, transparent 100%)`
+                if (i >= 60) {
                     clearInterval(this.timer)
                     this.timerReady = true
                     document.querySelector('.start__button').style.background =
