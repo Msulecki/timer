@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Time from './Time'
 import Scramble from './Scramble'
 import Start from './Start'
-import Swipeme from './Swipeme'
+import Slider from './Slider'
 
 
 import '../style/App.scss';
@@ -341,7 +341,7 @@ class App extends Component {
         {!this.state.started && <Scramble showScramble={this.handleCube} passScramble={this.handleScramble} />}
 
         {!this.state.started &&
-          <Swipeme
+          <Slider
             cubeGrid={this.state.cube}
             results={this.state.results}
             activeSlidePosition={this.handleActiveSlide}
