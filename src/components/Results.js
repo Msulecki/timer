@@ -20,7 +20,6 @@ class Results extends Component {
     }
 
     componentDidUpdate() {
-
         if ((this.props.results.length !== this.state.resultsLength) && this.props.results.length > 0) {
             this.setState({
                 resultsLength: this.props.results.length,
@@ -38,6 +37,7 @@ class Results extends Component {
                     best,
                     avg
                 })
+                this.props.scores([best, avg, 0, 0])
             }
             if (time.length >= 5) {
                 let last5 = []
@@ -52,6 +52,7 @@ class Results extends Component {
                     this.setState({
                         ao5
                     })
+                    this.props.scores([best, avg, 0, 0])
                 }
                 if (time.length >= 12) {
                     let last12 = []
@@ -66,19 +67,23 @@ class Results extends Component {
                         this.setState({
                             ao12
                         })
+                        this.props.scores([best, avg, ao5, ao12])
                     }
                 } else {
                     this.setState({
                         ao12: 0
                     })
+                    this.props.scores([best, avg, ao5, 0])
                 }
             } else {
                 this.setState({
                     ao5: 0
                 })
+                this.props.scores([best, avg, 0, 0])
             }
 
-        } else if (this.props.results.length === 0 && !this.state.nulled) {
+        }
+        if (this.props.results.length === 0 && !this.state.nulled) {
             this.setState({
                 best: 0,
                 avg: 0,
@@ -86,12 +91,13 @@ class Results extends Component {
                 ao12: 0,
                 nulled: true
             })
+            this.props.scores([0, 0, 0, 0])
         }
-        this.handleTimes()
+
     }
 
     handleTimes = () => {
-        let time = {
+        const time = {
             best: `${Math.floor(this.state.best / 6000) > 9 ?
                 Math.floor(this.state.best / 6000)
                 : `0` + Math.floor(this.state.best / 6000)}:${Math.floor((this.state.best / 100) % 60) > 9 ?
