@@ -1,0 +1,10 @@
+.results__list {
+    font-size: .8rem;
+    display: flex;
+    width: 100vw;
+    justify-content: center;
+
+    &>div{
+        margin: 0 10vw;
+    }
+}
