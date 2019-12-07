@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import Dots from './Dots'
 import Results from './Results'
 import ResultsList from './ResultsList'
+import ResultsDetailed from './ResultsDetailed'
 import Cube from './Cube'
 import '../style/Swipeme.scss';
 
 class Swipeme extends Component {
   state = {
     slidesNumber: 0,
-    activeSlide: this.props.slide
+    activeSlide: this.props.slide,
+    scores: []
   }
   componentDidMount() {
     this.down = false
@@ -20,7 +22,6 @@ class Swipeme extends Component {
     this.slideChanged = false
     this.slideNumber = 0
 
-
     this.slide = document.querySelector('.swipeme__slide')
     this.margin = -(this.slidePosition * this.slide.offsetWidth)
     this.slide.style.marginLeft = `${this.margin}px`
@@ -31,7 +32,6 @@ class Swipeme extends Component {
       slidesNumber: this.slideNumber
     })
 
-    //this.handleMouse()
   }
   componentDidUpdate() {
   }
@@ -75,17 +75,16 @@ class Swipeme extends Component {
 
     }
     if (event === 'move' && this.down === true) { // detect drag
-
       this.drag = true
       this.margin = (pageX - this.dragStartPosition) - (this.slidePosition * this.slide.offsetWidth)
-
-      // console.log(this.slidePosition, relativePosition, this.margin, this.offsetMargin);
       this.slide.style.marginLeft = `${this.margin}px`
-      // console.log(-(this.margin % slide.offsetWidth), (slide.offsetWidth / 4));
-
     }
   }
-
+  handleScores = (scores) => {
+    this.setState({
+      scores
+    })
+  }
 
   render() {
     return (
@@ -102,7 +101,9 @@ class Swipeme extends Component {
               onTouchMove={this.handleMouse.bind(this, 'move')}>
               <Cube cubeGrid={this.props.cubeGrid} />
               <Results
-                results={this.props.results} />
+                results={this.props.results}
+                scores={this.handleScores}
+              />
             </div>
 
             <div className="swipeme__slide"
@@ -114,7 +115,22 @@ class Swipeme extends Component {
               onTouchMove={this.handleMouse.bind(this, 'move')}>
               <ResultsList
                 results={this.props.results}
-                deleteResult={this.props.deleteResult} />
+                deleteResult={this.props.deleteResult}
+              />
+            </div>
+
+            <div className="swipeme__slide"
+              onMouseDown={this.handleMouse.bind(this, 'down')}
+              onMouseUp={this.handleMouse.bind(this, 'up')}
+              onMouseMove={this.handleMouse.bind(this, 'move')}
+              onTouchStart={this.handleMouse.bind(this, 'down')}
+              onTouchEnd={this.handleMouse.bind(this, 'up')}
+              onTouchMove={this.handleMouse.bind(this, 'move')}>
+              <ResultsDetailed
+                results={this.props.results}
+                deleteResult={this.props.deleteResult}
+                scores={this.state.scores}
+              />
             </div>
 
           </div>
