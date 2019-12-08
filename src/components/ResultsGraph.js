@@ -4,12 +4,8 @@ import Chart from 'chart.js';
 import '../style/ResultsGraph.scss'
 
 class ResultsGraph extends Component {
-
-    state = {
-
-    }
-    componentDidUpdate() {
-        //  console.log(this.props.results);
+    state = {}
+    handleGraph = () => {
         let data = []
         let labels = []
         this.props.results.forEach((el, i) => {
@@ -43,15 +39,16 @@ class ResultsGraph extends Component {
                 },
                 maintainAspectRatio: false
             }
-        });
+        })
+    }
+    componentDidUpdate() {
+        this.handleGraph()
     }
 
     render() {
         return (
-            <>
-                <canvas id="graph"></canvas>
-            </>
 
+            <canvas id="graph"></canvas>
         );
     }
 }
