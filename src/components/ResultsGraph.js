@@ -5,18 +5,20 @@ import '../style/ResultsGraph.scss'
 
 class ResultsGraph extends Component {
     state = {}
+
     handleGraph = () => {
         let data = []
         let labels = []
-        this.props.results.forEach((el, i) => {
+        this.props.results.forEach(el => {
             data.push(el[1])
             labels.push(el[3])
         })
-        data = data.reverse()
-        labels = labels.reverse()
-        console.log(data);
-        var ctx = document.getElementById('graph').getContext('2d');
-        var chart = new Chart(ctx, {
+
+        data = data.reverse() // reverse for proper direction on graph
+        labels = labels.reverse() // reverse for proper direction on graph
+
+        const ctx = document.getElementById('graph').getContext('2d');
+        new Chart(ctx, {
             type: 'line',
             data: {
                 labels: labels,
@@ -41,15 +43,15 @@ class ResultsGraph extends Component {
             }
         })
     }
+
     componentDidUpdate() {
         this.handleGraph()
     }
 
     render() {
         return (
-
             <canvas id="graph"></canvas>
-        );
+        )
     }
 }
 

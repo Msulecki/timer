@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import '../style/Cube.scss';
 
 class Cube extends Component {
-    state = {
+    state = {}
 
-    }
     handleCubeGrid = () => {
         const cube = this.props.cubeGrid
         const fFace = []
@@ -40,9 +39,7 @@ class Cube extends Component {
         <div key={'u'} className='cube__u cube__face'>{uFace}</div>,
         <div key={'d'} className='cube__d cube__face'>{dFace}</div>]
     }
-    componentDidUpdate() {
-        // this.handleCubeGrid()
-    }
+
     render() {
         return (
             <div className='cube__container'><div className="cube">{this.handleCubeGrid()}</div></div>

@@ -9,6 +9,7 @@ class Scramble extends Component {
             scrambleLength: 25
         }
     }
+
     handleScramble = () => {
         const result = []
         const faceArr = []
@@ -25,6 +26,7 @@ class Scramble extends Component {
             if (i === 0) {
                 faceArr.push(scramble.face[randAxis][randFace]) // first element can be whatever
             } else if (i === 1) {
+
                 while (!accepted) {
                     if (scramble.face[randAxis][randFace] !== faceArr[0]) { // second element can't be first element
                         faceArr.push(scramble.face[randAxis][randFace])
@@ -63,14 +65,10 @@ class Scramble extends Component {
         this.setState({
             scramble: result
         })
-
     }
 
     componentDidMount() {
         this.handleScramble()
-    }
-
-    componentDidUpdate() {
     }
 
     render() {

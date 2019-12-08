@@ -13,6 +13,7 @@ class Results extends Component {
             nulled: false
         }
     }
+
     componentDidMount() {
         this.setState({
             resultsLength: this.props.results.length
@@ -22,6 +23,7 @@ class Results extends Component {
     componentDidUpdate() {
         this.handleResults()
     }
+
     handleResults = () => {
         if ((this.props.results.length !== this.state.resultsLength) && this.props.results.length > 0) {
             this.setState({
@@ -29,6 +31,7 @@ class Results extends Component {
                 nulled: false
             })
             const time = []
+
             for (let i = 0; i < this.props.results.length; i++) {
                 time.push(this.props.results[i][1])
             }
@@ -41,10 +44,12 @@ class Results extends Component {
             } else {
                 median = (median[(median.length / 2) - 1] + median[(median.length / 2)]) / 2
             }
+
             let best = [...time]
             best = best.sort((a, b) => (a - b))[0]
             const avg = Math.floor([...time].reduce((p, c) => (p + c), 0) / time.length)
             const sDev = Math.sqrt([...time].reduce((acc, val) => acc.concat((val - avg) ** 2), []).reduce((acc, val) => acc + val, 0) / time.length)
+
             if (avg !== this.state.avg) {
                 this.setState({
                     best,
@@ -52,34 +57,41 @@ class Results extends Component {
                 })
                 this.props.scores([best, avg, 0, 0, 0, 0, median, sDev])
             }
+
             if (time.length >= 5) {
                 let last5 = []
                 for (let i = 0; i < 5; i++) {
                     last5.push(time[i])
                 }
+
                 last5 = last5.sort((a, b) => (a - b))
                 let mo3 = [...last5]
                 mo3.pop()
                 mo3.shift()
                 const ao5 = Math.floor(last5.reduce((p, c) => (p + c), 0) / last5.length)
                 mo3 = Math.floor(mo3.reduce((p, c) => (p + c), 0) / mo3.length)
+
                 if (ao5 !== this.state.ao5) {
                     this.setState({
                         ao5
                     })
                     this.props.scores([best, avg, ao5, 0, mo3, 0, median, sDev])
                 }
+
                 if (time.length >= 12) {
                     let last12 = []
+
                     for (let i = 0; i < 12; i++) {
                         last12.push(time[i])
                     }
+
                     last12 = last12.sort((a, b) => (a - b))
                     let mo10 = [...last12]
                     mo10.pop()
                     mo10.shift()
                     const ao12 = Math.floor(last12.reduce((p, c) => (p + c), 0) / last12.length)
                     mo10 = Math.floor(mo10.reduce((p, c) => (p + c), 0) / mo10.length)
+
                     if (ao12 !== this.state.ao12) {
                         this.setState({
                             ao12
@@ -98,8 +110,8 @@ class Results extends Component {
                 })
                 this.props.scores([best, avg, 0, 0, 0, 0, median, sDev])
             }
-
         }
+
         if (this.props.results.length === 0 && !this.state.nulled) {
             this.setState({
                 best: 0,
@@ -111,6 +123,7 @@ class Results extends Component {
             this.props.scores([0, 0, 0, 0, 0, 0, 0, 0])
         }
     }
+
     handleTimes = () => {
         const time = {
             best: `${Math.floor(this.state.best / 6000) > 9 ?
@@ -136,6 +149,7 @@ class Results extends Component {
         }
         return time
     }
+
     render() {
         return (<div className='results'>
             {/* Math.floor(this.result_time / 6000), (this.result_time / 100) % 60) */}

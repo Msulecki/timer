@@ -2,12 +2,8 @@ import React, { Component } from 'react';
 import '../style/ResultsDetailed.scss'
 
 class ResultsDetailed extends Component {
-    state = {
+    state = {}
 
-    }
-    componentDidMount() {
-
-    }
     componentDidUpdate() {
         this.times = this.props.results.map((el, i) => (
             <li key={i}>{el[3]}</li>
@@ -18,6 +14,7 @@ class ResultsDetailed extends Component {
 
     handleTimes = () => {
         const [best, avg, ao5, ao12, mo3, mo10, median, sdev] = [this.props.scores[0], this.props.scores[1], this.props.scores[2], this.props.scores[3], this.props.scores[4], this.props.scores[5], this.props.scores[6], this.props.scores[7]]
+
         const time = {
             best: `${Math.floor(best / 6000) > 9 ?
                 Math.floor(best / 6000)
@@ -62,7 +59,6 @@ class ResultsDetailed extends Component {
         }
         return time
     }
-
 
     render() {
         return (

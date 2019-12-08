@@ -3,11 +3,8 @@ import '../style/Start.scss'
 
 
 class Start extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            startFired: false
-        }
+    state = {
+        startFired: false
     }
 
     handleStart = (intervalStarted) => {
@@ -23,7 +20,7 @@ class Start extends Component {
                     document.querySelector('.start__button').style.background =
                         `rgb(103, 255, 92)`
                 }
-            }, 10);
+            }, 6);
 
         } else if (!intervalStarted) {
             clearInterval(this.timer)
@@ -31,12 +28,10 @@ class Start extends Component {
                 this.timerReady = false
                 this.props.started()
             }
+
             document.querySelector('.start__button').style.backgroundImage =
                 `linear-gradient(90deg, white 0%, white 0%, transparent 0%, transparent 100%)`
         }
-    }
-
-    componentDidMount() {
     }
 
     render() {
@@ -53,4 +48,5 @@ class Start extends Component {
         );
     }
 }
+
 export default Start;

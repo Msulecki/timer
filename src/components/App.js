@@ -10,7 +10,6 @@ class App extends Component {
   state = {
     started: false,
     lastScramble: '',
-    finished: false,
     results: [],
     resultDate: '',
     cube: {
@@ -21,11 +20,6 @@ class App extends Component {
       u: [],
       d: []
     },
-    rotation: true,
-    touchPosition: 0,
-    touchPositionSet: false,
-    swipeTime: [0, 0],
-    swipeSpeed: 0,
     activeSlidePosition: 0
   }
 
@@ -66,21 +60,21 @@ class App extends Component {
     if (isPressed && !this.keydown) {
       this.keydown = true
       if (this.state.started) {
-        document.querySelector('.app').click()
+        document.querySelector('.app').click() // emulate click event on key
       }
       let i = 0
       if (document.querySelector('.start__button')) {
         this.timer = setInterval(() => {
           i++
           document.querySelector('.start__button').style.backgroundImage =
-            `linear-gradient(90deg, white 0%, white ${i}%, transparent ${i}%, transparent 100%)`
-          if (i >= 100) {
+            `linear-gradient(90deg, white 0%, white ${(i / 60) * 100}%, transparent ${(i / 60) * 100}%, transparent 100%)`
+          if (i >= 60) {
             clearInterval(this.timer)
             this.timerReady = true
             document.querySelector('.start__button').style.background =
               `rgb(103, 255, 92)`
           }
-        }, 10);
+        }, 6);
       }
     }
     if (!isPressed) {
@@ -114,10 +108,6 @@ class App extends Component {
     window.onkeyup = this.handleKey.bind(this, false)
   }
 
-  componentDidUpdate() {
-
-  }
-
   render() {
     return (
       <div className="app"
@@ -145,7 +135,7 @@ class App extends Component {
         {!this.state.started && <Start started={this.handleTimer} />}
 
       </div >
-    );
+    )
   }
 }
 

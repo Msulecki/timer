@@ -13,11 +13,11 @@ class Slider extends Component {
     activeSlide: this.props.slide,
     scores: []
   }
+
   componentDidMount() {
     this.initVariables()
   }
-  componentDidUpdate() {
-  }
+
   initVariables = () => {
     this.down = false
     this.up = false
@@ -38,22 +38,23 @@ class Slider extends Component {
       slidesNumber: this.slideNumber
     })
   }
-  handleMouse = (event, e) => {
 
+  handleMouse = (event, e) => {
     const relativePosition = this.margin + (this.slidePosition * this.slide.offsetWidth)
     let pageX
+
     if (typeof e !== 'undefined') { //handle both click and touch events
       if (typeof e.pageX === 'undefined' && typeof e.touches[0] !== 'undefined') pageX = e.touches[0].pageX
       if (typeof e.pageX !== 'undefined') pageX = e.pageX
     }
+
     if (event === 'down') { // clicked / touched
       this.down = true
       this.up = false
       this.dragStartPosition = pageX
       this.slide.style.transition = '0s'
-      //console.log(e.touches[0].pageX);
-
     }
+
     if (event === 'up') { // reset events then mouseup / touchend
       this.down = false
       this.up = true
@@ -63,24 +64,30 @@ class Slider extends Component {
         if (relativePosition < 0 && this.slidePosition < this.slideNumber - 1) {
           this.slidePosition++
         }
+
         if (relativePosition > 0 && this.slidePosition > 0) {
           this.slidePosition--
         }
+
         this.setState({
           activeSlide: this.slidePosition
         })
+
         this.props.activeSlidePosition(this.slidePosition)
       }
+
       this.slide.style.marginLeft = `${-(this.slidePosition * this.slide.offsetWidth)}px`
       this.slide.style.transition = this.transitionTime
 
     }
+
     if (event === 'move' && this.down === true) { // detect drag
       this.drag = true
       this.margin = (pageX - this.dragStartPosition) - (this.slidePosition * this.slide.offsetWidth)
       this.slide.style.marginLeft = `${this.margin}px`
     }
   }
+
   handleScores = (scores) => {
     this.setState({
       scores
