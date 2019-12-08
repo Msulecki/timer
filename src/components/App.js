@@ -43,13 +43,14 @@ class App extends Component {
   handleResults = (results) => { // for passing last result to results array
     this.setState({
       results: results
-      //.reverse() // reverse for results newest to oldest
     })
+    localStorage.setItem('resultsArray', JSON.stringify(results))
   }
 
   handleResultDelete = (item) => {
     let results = this.state.results
     results.splice(item, 1)
+    this.handleLocalStorage('w', results)
     this.setState({
       results
     })
@@ -102,11 +103,28 @@ class App extends Component {
       activeSlidePosition
     })
   }
+  handleLocalStorage = (type, array) => {
+    if (type === 'r') { // r for read from localStorage
+      if (localStorage.getItem('resultsArray') !== null) {
+        const results = JSON.parse(localStorage.getItem('resultsArray'))
+        if (results !== this.state.results) {
+          this.setState({
+            results
+          })
+        }
+      }
+    }
+    if (type === 'w') { // w for write to localStorage
+      localStorage.setItem('resultsArray', JSON.stringify(array))
+    }
+  }
 
   componentDidMount() {
     window.onkeydown = this.handleKey.bind(this, true)
     window.onkeyup = this.handleKey.bind(this, false)
+    this.handleLocalStorage('r')
   }
+
 
   render() {
     return (
@@ -118,6 +136,7 @@ class App extends Component {
           started={this.handleTimer}
           timerActive={this.state.started}
           scramble={this.state.lastScramble}
+          results={this.state.results}
           resultsArr={this.handleResults}
           resultDate={this.state.resultDate}
         />

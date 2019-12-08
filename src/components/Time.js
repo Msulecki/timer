@@ -34,7 +34,6 @@ class Time extends Component {
     }
 
     componentDidUpdate() {
-        console.log(this.state.results);
         if (this.props.timerActive) {
             this.handleTimer()
         } else {
@@ -44,7 +43,7 @@ class Time extends Component {
 
                 if ((this.state.lastScramble.length > 0) && document.querySelector('.time__clock').textContent !== '00:00.00' && this.state.resultDate !== this.props.resultDate) {
                     this.setState({
-                        results: [[this.props.resultDate, this.result_time, this.state.lastScramble, document.querySelector('.time__clock').textContent], ...this.state.results],
+                        results: [[this.props.resultDate, this.result_time, this.state.lastScramble, document.querySelector('.time__clock').textContent], ...this.props.results],
                         resultsUpdated: true,
                         resultDate: this.props.resultDate
                     })
