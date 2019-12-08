@@ -34,6 +34,7 @@ class Time extends Component {
     }
 
     componentDidUpdate() {
+        console.log(this.state.results);
         if (this.props.timerActive) {
             this.handleTimer()
         } else {
@@ -66,7 +67,7 @@ class Time extends Component {
     render() {
         return (
             <div className="time">
-                <div className="time__scramble">{!this.props.timerActive && (this.state.results.length > 0) && this.state.results[this.state.results.length - 1][2].join(' ')}</div> {/* If timer isn't active, show last element */}
+                <div className="time__scramble">{!this.props.timerActive && (this.state.results.length > 0) && this.state.results[0][2].join(' ')}</div> {/* If timer isn't active, show last element */}
                 <div className="time__clock">00:00.00</div>
             </div>
         );
