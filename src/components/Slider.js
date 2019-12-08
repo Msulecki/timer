@@ -14,6 +14,11 @@ class Slider extends Component {
     scores: []
   }
   componentDidMount() {
+    this.initVariables()
+  }
+  componentDidUpdate() {
+  }
+  initVariables = () => {
     this.down = false
     this.up = false
     this.drag = false
@@ -32,9 +37,6 @@ class Slider extends Component {
     this.setState({
       slidesNumber: this.slideNumber
     })
-
-  }
-  componentDidUpdate() {
   }
   handleMouse = (event, e) => {
 
@@ -56,8 +58,6 @@ class Slider extends Component {
       this.down = false
       this.up = true
       this.drag = false
-
-
 
       if (Math.abs(relativePosition) > 50 && (this.dragStartPosition - pageX) !== 0) {
         if (relativePosition < 0 && this.slidePosition < this.slideNumber - 1) {
@@ -95,7 +95,6 @@ class Slider extends Component {
             onMouseDown={this.handleMouse.bind(this, 'down')}
             onMouseUp={this.handleMouse.bind(this, 'up')}
             onMouseMove={this.handleMouse.bind(this, 'move')}
-            //   onMouseLeave={this.handleMouse.bind(this, 'up')}
             onTouchStart={this.handleMouse.bind(this, 'down')}
             onTouchEnd={this.handleMouse.bind(this, 'up')}
             onTouchMove={this.handleMouse.bind(this, 'move')}
@@ -128,15 +127,11 @@ class Slider extends Component {
               <ResultsGraph
                 results={this.props.results}
               />
-            </div>
 
+            </div>
           </div>
         </div>
-
-
         <Dots length={this.state.slidesNumber} active={this.state.activeSlide} />
-
-
       </>
     );
   }
