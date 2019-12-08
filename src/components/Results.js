@@ -20,6 +20,9 @@ class Results extends Component {
     }
 
     componentDidUpdate() {
+        this.handleResults()
+    }
+    handleResults = () => {
         if ((this.props.results.length !== this.state.resultsLength) && this.props.results.length > 0) {
             this.setState({
                 resultsLength: this.props.results.length,
@@ -30,7 +33,7 @@ class Results extends Component {
                 time.push(this.props.results[i][1])
             }
 
-            let median = time.sort((a, b) => (a - b))
+            let median = [...time].sort((a, b) => (a - b))
             if (median.length % 2 === 1) {
                 if (median.length > 1) {
                     median = median[Math.floor(median.length / 2)]
@@ -40,8 +43,8 @@ class Results extends Component {
             }
             let best = [...time]
             best = best.sort((a, b) => (a - b))[0]
-            const avg = Math.floor(time.reduce((p, c) => (p + c), 0) / time.length)
-            const sDev = Math.sqrt(time.reduce((acc, val) => acc.concat((val - avg) ** 2), []).reduce((acc, val) => acc + val, 0) / time.length)
+            const avg = Math.floor([...time].reduce((p, c) => (p + c), 0) / time.length)
+            const sDev = Math.sqrt([...time].reduce((acc, val) => acc.concat((val - avg) ** 2), []).reduce((acc, val) => acc + val, 0) / time.length)
             if (avg !== this.state.avg) {
                 this.setState({
                     best,
@@ -107,9 +110,7 @@ class Results extends Component {
             })
             this.props.scores([0, 0, 0, 0, 0, 0, 0, 0])
         }
-
     }
-
     handleTimes = () => {
         const time = {
             best: `${Math.floor(this.state.best / 6000) > 9 ?
