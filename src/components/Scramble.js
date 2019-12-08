@@ -59,7 +59,6 @@ class Scramble extends Component {
         faceArr.forEach(el => {
             result.push(el + scramble.rotation[Math.floor(Math.random() * 3)]) // ' or 2 or nothing can be added randomly to each element
         })
-
         this.props.showScramble(result)
         this.props.passScramble(result)
         this.setState({

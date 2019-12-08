@@ -1,13 +1,11 @@
 .app {
-    background: linear-gradient(to bottom, #6e529d 0%,#d97b93 100%);
+    background: linear-gradient(to bottom, #333461 0%,#aa4583 100%);
     min-height: 100vh;
     max-height: 100vh;
     position: relative;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-
-   
+    overflow: hidden; 
 }
 ::-webkit-scrollbar {
     width: 0px;  /* Remove scrollbar space */
