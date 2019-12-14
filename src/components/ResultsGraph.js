@@ -24,13 +24,24 @@ class ResultsGraph extends Component {
                 labels: labels,
                 datasets: [{
                     data: data,
-                    borderWidth: 1
+                    borderWidth: 0,
+                    backgroundColor: 'rgba(0, 10, 20,0.3)'
                 }]
             },
             options: {
+                elements: {
+                    line: {
+                        borderColor: 'black'
+                    }
+                },
                 scales: {
                     yAxes: [{
                         display: false
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontColor: 'black'
+                        }
                     }]
                 },
                 legend: {
