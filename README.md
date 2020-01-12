@@ -1,4 +1,18 @@
-For now, it just show last solve time, and helps with scrambling. More to come!
+# Simple timer
+### Live version [here](https://msulecki.github.io/timer/).
+
+1. Hold Start button
+2. Release when green and start solving
+3. Tap/click/press space anywhere on screen to finish
+
+- [x] Shows scramble algorithm and visual pattern (click on algorithm to re-scramble)
+- [x] Has simple statistics, popular with cubbers. 
+- [x] Results are stored in local-storage, and shown on graph to see your progress.
+
+#### **HAVE FUN!**
+
+
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
