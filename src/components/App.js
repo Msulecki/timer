@@ -103,6 +103,7 @@ class App extends Component {
       activeSlidePosition
     })
   }
+
   handleLocalStorage = (type, array) => {
     if (type === 'r') { // r for read from localStorage
       if (localStorage.getItem('resultsArray') !== null) {
@@ -124,7 +125,6 @@ class App extends Component {
     window.onkeyup = this.handleKey.bind(this, false)
     this.handleLocalStorage('r')
   }
-
 
   render() {
     return (

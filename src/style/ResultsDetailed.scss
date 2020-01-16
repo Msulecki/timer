@@ -3,12 +3,13 @@
     display: flex;
     width: 100vw;
     justify-content: center;
-    color: white;
+    color: hsl(0,0,96);
 
-    &>div{
+    &  >div{
         margin: 0 10vw;
     }
-    ol{
+    
+    ol {
         font-size: 1rem;
     }
 }

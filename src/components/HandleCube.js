@@ -24,6 +24,7 @@ const handleCube = (scramble) => {
         u: [u, u, u, u, u, u, u, u, u],
         d: [d, d, d, d, d, d, d, d, d]
     }
+
     for (let i = 0; i < scramble.length; i++) {
         const rotation = scramble[i]
 

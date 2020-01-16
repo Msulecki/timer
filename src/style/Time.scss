@@ -1,5 +1,5 @@
 .time {
-    color: white;
+    color: hsl(0,0,96);
     min-height: 80px;
     display: flex;
     flex-direction: column;
@@ -7,16 +7,18 @@
     justify-content: flex-end;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
-    &__clock{
+
+    &__clock {
         width: 100vw;
         text-align: center;
         font-size: 3rem;
         border-bottom: 2px solid rgba(0,0,0,0.5);
         font-family: 'Cutive Mono', monospace;
     }
-    &__scramble{
+
+    &__scramble {
         font-size: .75rem;
-        color: #a5a5a5;
+        color: hsl(0,0,80);
         margin: 5px 10px 0 10px;
     }
 }

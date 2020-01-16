@@ -1,13 +1,16 @@
 .results {
-    height: auto;
-    font-size: 1rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
     justify-items: center;
     align-items: center;
+
+    height: auto;
+    font-size: 1rem;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 5px;
+
     margin-top: 15px;
-    color: white;
+    color: hsl(0,0,96);
 
     &__best{
         color: hsl(100,80,65);

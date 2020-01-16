@@ -1,22 +1,26 @@
 .results__header {
     text-align: center;
     font-size: 2rem;
-    color: white;
+    color: hsl(0,0,96);
     user-select: none;
 }
+
 ol {
     margin: 0;
     padding: 0;
 }
+
 ol > div {
     text-align: center;
     user-select: none;
 }
+
 li {
-    color: white;
+    color: hsl(0,0,96);
     font-size: .9rem;
     margin-left: 10%;
-    &>button{
+
+    & > button {
         border: 0;
         padding: 0;
         outline: 0;
@@ -26,7 +30,8 @@ li {
         cursor: pointer;
         user-select: none;
         font-size: 1rem;
-        &:hover{
+
+        &:hover {
             color: hsl(360,90,60);
         }
     }

@@ -2,16 +2,13 @@ import React, { Component } from 'react';
 import '../style/Results.scss'
 
 class Results extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            resultsLength: 0,
-            best: 0,
-            avg: 0,
-            ao5: 0,
-            ao12: 0,
-            nulled: false
-        }
+    state = {
+        resultsLength: 0,
+        best: 0,
+        avg: 0,
+        ao5: 0,
+        ao12: 0,
+        nulled: false
     }
 
     componentDidMount() {
@@ -37,12 +34,14 @@ class Results extends Component {
             }
 
             let median = [...time].sort((a, b) => (a - b))
-            if (median.length % 2 === 1) {
-                if (median.length > 1) {
-                    median = median[Math.floor(median.length / 2)]
-                }
+            if (median.length % 2 === 1 && median.length > 1) {
+
+                median = median[Math.floor(median.length / 2)]
+
             } else {
+
                 median = (median[(median.length / 2) - 1] + median[(median.length / 2)]) / 2
+
             }
 
             let best = [...time]
@@ -98,13 +97,13 @@ class Results extends Component {
                         })
                         this.props.scores([best, avg, ao5, ao12, mo3, mo10, median, sDev])
                     }
-                } else {
+                } else { // time.length < 12
                     this.setState({
                         ao12: 0
                     })
                     this.props.scores([best, avg, ao5, 0, mo3, 0, median, sDev])
                 }
-            } else {
+            } else { // time.length < 5
                 this.setState({
                     ao5: 0
                 })
@@ -126,21 +125,25 @@ class Results extends Component {
 
     handleTimes = () => {
         const time = {
+
             best: `${Math.floor(this.state.best / 6000) > 9 ?
                 Math.floor(this.state.best / 6000)
                 : `0` + Math.floor(this.state.best / 6000)}:${Math.floor((this.state.best / 100) % 60) > 9 ?
                     ((this.state.best / 100) % 60).toFixed(2)
                     : `0` + ((this.state.best / 100) % 60).toFixed(2)}`,
+
             avg: `${Math.floor(this.state.avg / 6000) > 9 ?
                 Math.floor(this.state.avg / 6000)
                 : `0` + Math.floor(this.state.avg / 6000)}:${Math.floor((this.state.avg / 100) % 60) > 9 ?
                     ((this.state.avg / 100) % 60).toFixed(2)
                     : `0` + ((this.state.avg / 100) % 60).toFixed(2)}`,
+
             ao5: `${Math.floor(this.state.ao5 / 6000) > 9 ?
                 Math.floor(this.state.ao5 / 6000).toFixed(2)
                 : `0` + Math.floor(this.state.ao5 / 6000)}:${Math.floor((this.state.ao5 / 100) % 60) > 9 ?
                     ((this.state.ao5 / 100) % 60).toFixed(2)
                     : `0` + ((this.state.ao5 / 100) % 60).toFixed(2)}`,
+
             ao12: `${Math.floor(this.state.ao12 / 6000) > 9 ?
                 Math.floor(this.state.ao12 / 6000).toFixed(2)
                 : `0` + Math.floor(this.state.ao12 / 6000)}:${Math.floor((this.state.ao12 / 100) % 60) > 9 ?
@@ -152,7 +155,6 @@ class Results extends Component {
 
     render() {
         return (<div className='results'>
-            {/* Math.floor(this.result_time / 6000), (this.result_time / 100) % 60) */}
             <div>Best: <span className='results__best'>{this.handleTimes().best}</span></div>
             <div>{`Avg: ${this.handleTimes().avg}`}</div>
             <div>{`Ao5: ${this.handleTimes().ao5}`}</div>

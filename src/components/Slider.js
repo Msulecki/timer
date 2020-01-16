@@ -34,6 +34,7 @@ class Slider extends Component {
 
     const container = document.querySelector('.swipeme__content') //container for slides
     this.slideNumber = container.childNodes.length // container childrens = number of slides
+
     this.setState({
       slidesNumber: this.slideNumber
     })

@@ -38,7 +38,6 @@ class Time extends Component {
             this.handleTimer()
         } else {
             clearInterval(this.timer)
-            // console.log(this.state.lastScramble, this.props.scramble);
             if ((this.state.lastScramble !== this.props.scramble)) {
 
                 if ((this.state.lastScramble.length > 0) && document.querySelector('.time__clock').textContent !== '00:00.00' && this.state.resultDate !== this.props.resultDate) {

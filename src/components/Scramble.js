@@ -2,12 +2,9 @@ import React, { Component } from 'react';
 import '../style/Scramble.scss'
 
 class Scramble extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            scramble: '',
-            scrambleLength: 25
-        }
+    state = {
+        scramble: '',
+        scrambleLength: 25
     }
 
     handleScramble = () => {
@@ -30,7 +27,7 @@ class Scramble extends Component {
                 while (!accepted) {
                     if (scramble.face[randAxis][randFace] !== faceArr[0]) { // second element can't be first element
                         faceArr.push(scramble.face[randAxis][randFace])
-                        accepted = true // for breaking the loop
+                        accepted = true // for exiting the loop
                     }
                     randAxis = Math.floor(Math.random() * 3)
                     randFace = Math.floor(Math.random() * 2)
@@ -51,7 +48,7 @@ class Scramble extends Component {
                         ))
                 ) {
                     faceArr.push(scramble.face[randAxis][randFace])
-                    accepted = true // for breaking the loop
+                    accepted = true // for exiting the loop
                 }
             }
         }
