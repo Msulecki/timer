@@ -174,23 +174,17 @@ const handleCube = (scramble) => {
         }
         if (rotation === `L` || rotation === `R` || rotation === `F` || rotation === `B` || rotation === `U` || rotation === `D`) {
             for (let i = 0; i < 9; i++) {
-                if (i !== 4) {// 4 is center cube
-                    cubeScrambled[rotation.toLowerCase()][i] = cube[rotation.toLowerCase()][8 - ((2 + 3 * i) % 10)]
-                }
+                cubeScrambled[rotation.toLowerCase()][i] = cube[rotation.toLowerCase()][8 - ((2 + 3 * i) % 10)]
             }
         }
         if (rotation === `L'` || rotation === `R'` || rotation === `F'` || rotation === `B'` || rotation === `U'` || rotation === `D'`) {
             for (let i = 0; i < 9; i++) {
-                if (i !== 4) {// 4 is center cube
-                    cubeScrambled[rotation[0].toLowerCase()][i] = cube[rotation[0].toLowerCase()][(2 + 3 * i) % 10]
-                }
+                cubeScrambled[rotation[0].toLowerCase()][i] = cube[rotation[0].toLowerCase()][(2 + 3 * i) % 10]
             }
         }
         if (rotation === `L2` || rotation === `R2` || rotation === `F2` || rotation === `B2` || rotation === `U2` || rotation === `D2`) {
             for (let i = 0; i < 9; i++) {
-                if (i !== 4) {// 4 is center cube
-                    cubeScrambled[rotation[0].toLowerCase()][i] = cube[rotation[0].toLowerCase()][8 - i]
-                }
+                cubeScrambled[rotation[0].toLowerCase()][i] = cube[rotation[0].toLowerCase()][8 - i]
             }
         }
         //console.log(rotation, i, cubeScrambled);
